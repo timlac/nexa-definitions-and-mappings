@@ -11,8 +11,7 @@ class Mapper:
     def _load_data_if_needed():
         # Load data from file if it hasn't been loaded yet
         if Mapper.data is None:
-            module_path = os.path.dirname(__file__)
-            data_path = os.path.join(module_path, '../definitions/sentimotion_definitions.json')
+            data_path = 'definitions/sentimotion_definitions.json'
 
             with open(data_path, 'r') as file:
                 Mapper.data = json.load(file)

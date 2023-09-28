@@ -88,8 +88,3 @@ class Mapper:
     def get_eng_translation_from_swe(emotion_swe):
         Mapper._load_data_if_needed()
         return Mapper.emotion_swe_to_eng[emotion_swe]
-
-
-m = Mapper
-
-print(m.get_valence_from_emotion("shame"))

@@ -3,82 +3,93 @@ import json
 import os
 
 
-class SentimotionMapper:
+class Mapper:
 
     data = None
 
     @staticmethod
     def _load_data_if_needed():
-        module_path = os.path.dirname(__file__)
-        data_path = os.path.join(module_path, '../definitions/sentimotion_definitions.json')
-
         # Load data from file if it hasn't been loaded yet
-        if SentimotionMapper.data is None:
-            with open(data_path, 'r') as file:
-                SentimotionMapper.data = file.read()
+        if Mapper.data is None:
+            module_path = os.path.dirname(__file__)
+            data_path = os.path.join(module_path, '../definitions/sentimotion_definitions.json')
 
+            with open(data_path, 'r') as file:
+                Mapper.data = json.load(file)
+        Mapper.load_mappings(Mapper.data)
 
     @staticmethod
-    def load_mappings():
+    def load_mappings(data):
 
-    def __init__(self):
-        self.module_path = os.path.dirname(__file__)
-        self.data_path = os.path.join(self.module_path, '../definitions')
-        self.load_mappings()
+        print(data)
 
-    def load_json(self, filename):
-        with open(os.path.join(self.data_path, filename), 'r') as file:
-            return json.load(file)
+        Mapper.emotion_to_emotion_abr = data["emotion_to_emotion_abr"]
+        Mapper.emotion_abr_to_emotion = dict(zip(Mapper.emotion_to_emotion_abr.values(),
+                                                 Mapper.emotion_to_emotion_abr.keys()))
 
-    def load_mappings(self):
-        data = self.load_json('sentimotion_definitions.json')
-        self.emotion_to_emotion_abr = data["emotion_to_emotion_abr"]
-        self.emotion_abr_to_emotion = dict(zip(self.emotion_to_emotion_abr.values(),
-                                               self.emotion_to_emotion_abr.keys()))
+        Mapper.emotion_to_emotion_id = data["emotion_to_emotion_id"]
+        Mapper.emotion_id_to_emotion = dict(zip(Mapper.emotion_to_emotion_id.values(),
+                                                Mapper.emotion_to_emotion_id.keys()))
 
-        self.emotion_to_emotion_id = data["emotion_to_emotion_id"]
-        self.emotion_id_to_emotion = dict(zip(self.emotion_to_emotion_id.values(),
-                                              self.emotion_to_emotion_id.keys()))
+        Mapper.emotion_abr_to_emotion_id = {}
+        for emotion, abr in Mapper.emotion_to_emotion_abr.items():
+            Mapper.emotion_abr_to_emotion_id[abr] = Mapper.emotion_to_emotion_id.get(emotion)
+            
+        Mapper.emotion_id_to_emotion_abr = dict(zip(Mapper.emotion_abr_to_emotion_id,
+                                                    Mapper.emotion_abr_to_emotion_id))
 
-        self.emotion_abr_to_emotion_id = {}
-        for emotion, abr in self.emotion_to_emotion_abr.items():
-            self.emotion_abr_to_emotion_id[abr] = self.emotion_to_emotion_id.get(emotion)
-        self.emotion_id_to_emotion_abr = dict(zip(self.emotion_abr_to_emotion_id,
-                                                  self.emotion_abr_to_emotion_id))
+        Mapper.emotion_to_valence = data["emotion_to_valence"]
 
-        self.emotion_to_valence = data["emotion_to_valence"]
+        Mapper.emotion_eng_to_swe = data["emotion_eng_to_swe"]
+        Mapper.emotion_swe_to_eng = dict(zip(Mapper.emotion_eng_to_swe.values(),
+                                             Mapper.emotion_eng_to_swe.keys()))
+    
+    @staticmethod
+    def get_emotion_abr_from_emotion(emotion):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_to_emotion_abr[emotion]
+    
+    @staticmethod
+    def get_emotion_from_abr(abr):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_abr_to_emotion[abr]
+    
+    @staticmethod
+    def get_emotion_id_from_emotion(emotion):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_to_emotion_id[emotion]
+    
+    @staticmethod
+    def get_emotion_from_id(emotion_id):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_id_to_emotion[emotion_id]
+    
+    @staticmethod
+    def get_emotion_abr_from_id(emotion_id):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_id_to_emotion_abr[emotion_id]
+    
+    @staticmethod
+    def get_id_from_emotion_abr(emotion_abr):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_abr_to_emotion_id[emotion_abr]
+    
+    @staticmethod
+    def get_valence_from_emotion(emotion):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_to_valence[emotion]
+    
+    @staticmethod
+    def get_swe_translation_from_eng(emotion_eng):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_eng_to_swe[emotion_eng]
+    
+    @staticmethod
+    def get_eng_translation_from_swe(emotion_swe):
+        Mapper._load_data_if_needed()
+        return Mapper.emotion_swe_to_eng[emotion_swe]
 
-        self.emotion_eng_to_swe = data["emotion_eng_to_swe"]
-        self.emotion_swe_to_eng = dict(zip(self.emotion_eng_to_swe.values(),
-                                           self.emotion_eng_to_swe.keys()))
 
-    def get_emotion_abr_from_emotion(self, emotion):
-        return self.emotion_to_emotion_abr[emotion]
+m = Mapper
 
-    def get_emotion_from_abr(self, abr):
-        return self.emotion_abr_to_emotion[abr]
-
-    def get_emotion_id_from_emotion(self, emotion):
-        return self.emotion_to_emotion_id[emotion]
-
-    def get_emotion_from_id(self, emotion_id):
-        return self.emotion_id_to_emotion[emotion_id]
-
-    def get_emotion_abr_from_id(self, emotion_id):
-        return self.emotion_id_to_emotion_abr[emotion_id]
-
-    def get_id_from_emotion_abr(self, emotion_abr):
-        return self.emotion_abr_to_emotion_id[emotion_abr]
-
-    def get_valence_from_emotion(self, emotion):
-        return self.emotion_to_valence[emotion]
-
-    def get_swe_translation_from_eng(self, emotion_eng):
-        return self.emotion_eng_to_swe[emotion_eng]
-
-    def get_eng_translation_from_swe(self, emotion_swe):
-        return self.emotion_swe_to_eng[emotion_swe]
-
-
-mapper = SentimotionMapper()
-
+print(m.get_valence_from_emotion("shame"))

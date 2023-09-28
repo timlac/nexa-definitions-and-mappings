@@ -4,6 +4,23 @@ import os
 
 
 class SentimotionMapper:
+
+    data = None
+
+    @staticmethod
+    def _load_data_if_needed():
+        module_path = os.path.dirname(__file__)
+        data_path = os.path.join(module_path, '../definitions/sentimotion_definitions.json')
+
+        # Load data from file if it hasn't been loaded yet
+        if SentimotionMapper.data is None:
+            with open(data_path, 'r') as file:
+                SentimotionMapper.data = file.read()
+
+
+    @staticmethod
+    def load_mappings():
+
     def __init__(self):
         self.module_path = os.path.dirname(__file__)
         self.data_path = os.path.join(self.module_path, '../definitions')

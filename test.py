@@ -1,9 +1,17 @@
 from py_sentimotion_mapper.sentimotion_mapper import Mapper
 
-Mapper.get_emotion_from_abr("ang")
-Mapper.get_emotion_abr_from_emotion("anger")
+# # Translate a single value
+# translation1 = Mapper.get_eng_translation_from_swe("ilska")
+# print(translation1)  # Output: "anger"
+#
+# # Translate a list of values
+# emotions = ["ilska", "glädje", "sorg"]
+# translations = Mapper.get_eng_translation_from_swe(emotions)
+# print(translations)  # Output: ["anger", "joy", "sadness"]
 
-print(Mapper.get_emotion_id_from_emotion("anger"))
 
+print(Mapper.get_emotion_abr_from_emotion_id(1))
 
-print(Mapper.emotion_to_emotion_abr)
+print(Mapper.emotion_id_to_emotion_abr)
+
+print(Mapper.emotion_abr_to_emotion_id)

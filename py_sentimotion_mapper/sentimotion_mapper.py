@@ -1,4 +1,5 @@
 # mapper.py
+import numpy as np
 import json
 import os
 from pkg_resources import resource_filename
@@ -61,7 +62,7 @@ class Mapper:
     @staticmethod
     def translate_values(mapping, input_values):
         # Check if the input is a list or an array
-        if isinstance(input_values, (list, tuple)):
+        if isinstance(input_values, (list, tuple, np.ndarray)):
             # If it's a list or tuple, translate each element
             translations = [mapping.get(value) for value in input_values]
             return translations

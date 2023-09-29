@@ -5,6 +5,21 @@ from pkg_resources import resource_filename
 
 
 class Mapper:
+
+    emotion_abr_to_emotion = None
+    emotion_to_emotion_abr = None
+
+    emotion_abr_to_emotion_id = None
+    emotion_id_to_emotion_abr = None
+
+    emotion_to_emotion_id = None
+    emotion_id_to_emotion = None
+
+    emotion_to_valence = None
+
+    emotion_eng_to_swe = None
+    emotion_swe_to_eng = None
+
     data = None
 
     @staticmethod
@@ -14,16 +29,12 @@ class Mapper:
             data_path = resource_filename('py_sentimotion_mapper',
                                           'sentimotion_definitions.json')
 
-            # data_path = 'sentimotion_definitions.json'
-
             with open(data_path, 'r') as file:
                 Mapper.data = json.load(file)
         Mapper.load_mappings(Mapper.data)
 
     @staticmethod
     def load_mappings(data):
-
-        print(data)
 
         Mapper.emotion_to_emotion_abr = data["emotion_to_emotion_abr"]
         Mapper.emotion_abr_to_emotion = dict(zip(Mapper.emotion_to_emotion_abr.values(),
@@ -52,9 +63,9 @@ class Mapper:
         return Mapper.emotion_to_emotion_abr[emotion]
 
     @staticmethod
-    def get_emotion_from_abr(abr):
+    def get_emotion_from_abr(emotion_abr):
         Mapper._load_data_if_needed()
-        return Mapper.emotion_abr_to_emotion[abr]
+        return Mapper.emotion_abr_to_emotion[emotion_abr]
 
     @staticmethod
     def get_emotion_id_from_emotion(emotion):
@@ -89,4 +100,7 @@ class Mapper:
     @staticmethod
     def get_eng_translation_from_swe(emotion_swe):
         Mapper._load_data_if_needed()
-        return Mapper.emotion_swe_to_eng[emotion_swe]
+        ret = Mapper.emotion_swe_to_eng[emotion_swe]
+        return ret
+
+

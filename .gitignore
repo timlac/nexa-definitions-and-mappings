@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+
+py_sentimotion_mapper/mini_mapper.py
+
+
 # C extensions
 *.so
 

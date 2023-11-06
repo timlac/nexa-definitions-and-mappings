@@ -1,5 +1,5 @@
 import unittest
-from py_sentimotion_mapper.sentimotion_mapper import Mapper
+from nexa_py_sentimotion_mapper.sentimotion_mapper import Mapper
 
 
 class TestMapperTranslationMethods(unittest.TestCase):

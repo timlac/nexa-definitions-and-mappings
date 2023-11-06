@@ -1,5 +1,5 @@
 import numpy as np
-from py_sentimotion_mapper.sentimotion_mapper import Mapper
+from nexa_py_sentimotion_mapper.sentimotion_mapper import Mapper
 
 # Translate a single value
 translation1 = Mapper.get_eng_translation_from_swe("ilska")

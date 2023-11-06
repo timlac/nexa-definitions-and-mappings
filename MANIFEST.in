@@ -1,1 +1,1 @@
-recursive-include py_sentimotion_mapper *.json
+recursive-include nexa_py_sentimotion_mapper *.json

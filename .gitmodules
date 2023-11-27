@@ -1,0 +1,6 @@
+[submodule "sentimotion_definitions.json"]
+	path = sentimotion_definitions.json
+	url = git@github.com:timlac/nexa-sentimotion-definitions.git
+[submodule "nexa_py_sentimotion_mapper/nexa-sentimotion-definitions"]
+	path = nexa_py_sentimotion_mapper/nexa-sentimotion-definitions
+	url = git@github.com:timlac/nexa-sentimotion-definitions.git

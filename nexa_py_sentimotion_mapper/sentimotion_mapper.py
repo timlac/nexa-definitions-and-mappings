@@ -28,7 +28,7 @@ class Mapper:
         # Load data from file if it hasn't been loaded yet
         if Mapper.data is None:
             data_path = resource_filename('nexa_py_sentimotion_mapper',
-                                          'sentimotion_definitions.json')
+                                          'nexa-sentimotion-definitions/sentimotion_definitions.json')
             # data_path = "definitions/sentimotion_definitions.json"
 
             with open(data_path, 'r') as file:
